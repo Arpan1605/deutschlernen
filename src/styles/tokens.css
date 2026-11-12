@@ -1,0 +1,73 @@
+/* Design tokens: colours (light + dark), type families, radius. */
+/* Layout: a train timetable — 90 stops on one line, today's stop as the departure board, sections as platforms (tabs). */
+:root {
+  --bg: #eceff3;
+  --surface: #ffffff;
+  --sunk: #e2e6ec;
+  --ink: #121823;
+  --muted: #586174;
+  --line: #cfd5de;
+  --signal: #f2b705;
+  --signal-ink: #1a1400;
+  --link: #2448a6;
+  --ok: #1d7a4a;
+  --warn: #a4570a;
+  --c-wort: #7b4bc4;
+  --c-gram: #4d5a70;
+  --c-lesen: #2448a6;
+  --c-hoeren: #0f7c86;
+  --c-schreiben: #a4570a;
+  --c-sprechen: #b8325a;
+  --c-sehen: #1d7a4a;
+  --c-musik: #8a6d00;
+  --f-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --f-body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e121a;
+    --surface: #161c27;
+    --sunk: #1d2431;
+    --ink: #e7eaf0;
+    --muted: #97a1b4;
+    --line: #2a3344;
+    --signal: #f2b705;
+    --signal-ink: #1a1400;
+    --link: #8fa9ff;
+    --ok: #4cc38a;
+    --warn: #e3964a;
+    --c-wort: #b18cf0;
+    --c-gram: #a3afc4;
+    --c-lesen: #8fa9ff;
+    --c-hoeren: #4fc4cf;
+    --c-schreiben: #e3964a;
+    --c-sprechen: #f07b9f;
+    --c-sehen: #4cc38a;
+    --c-musik: #e0c04a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e121a;
+  --surface: #161c27;
+  --sunk: #1d2431;
+  --ink: #e7eaf0;
+  --muted: #97a1b4;
+  --line: #2a3344;
+  --signal: #f2b705;
+  --signal-ink: #1a1400;
+  --link: #8fa9ff;
+  --ok: #4cc38a;
+  --warn: #e3964a;
+  --c-wort: #b18cf0;
+  --c-gram: #a3afc4;
+  --c-lesen: #8fa9ff;
+  --c-hoeren: #4fc4cf;
+  --c-schreiben: #e3964a;
+  --c-sprechen: #f07b9f;
+  --c-sehen: #4cc38a;
+  --c-musik: #e0c04a;
+  color-scheme: dark;
+}

@@ -1,0 +1,29 @@
+{
+  "name": "fahrplan",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Fahrplan \u2013 a personal day-by-day German study plan (A1 to C1) with lessons, audio, tests and PDF worksheets.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "typecheck": "tsc -b --noEmit",
+    "preview": "vite preview",
+    "artifact": "npm run build && node scripts/to-artifact.mjs",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
+  },
+  "dependencies": {
+    "jspdf": "2.5.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "4.3.4",
+    "prettier": "^3.3.3",
+    "typescript": "5.6.3",
+    "vite": "5.4.11",
+    "vite-plugin-singlefile": "2.0.3"
+  }
+}
