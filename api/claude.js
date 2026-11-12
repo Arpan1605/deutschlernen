@@ -1,38 +1,25 @@
+// Optional server function for hosting on Vercel (also works as a Netlify/Node handler with small changes).
+// It keeps your Anthropic API key on the server so visitors don't need their own.
+// Set ANTHROPIC_API_KEY in the host's environment variables, and build the site with
+// VITE_AI_PROXY_URL=/api/claude. Optionally set ALLOWED_ORIGIN to your site's URL.
+const MODELS = new Set([process.env.AI_MODEL || "claude-sonnet-5-5", process.env.AI_QUICK_MODEL || "claude-haiku-5-5"]);
+const MAX_TOKENS = 8000;
+
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    res.status(405).json({ error: "Method not allowed" });
-    return;
-  }
+  const origin = process.env.ALLOWED_ORIGIN;
+  if (origin) res.setHeader("Access-Control-Allow-Origin", origin);
+  if (req.method === "OPTIONS") { res.setHeader("Access-Control-Allow-Headers", "content-type"); return res.status(204).end(); }
+  if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
+  if (origin && req.headers.origin && req.headers.origin !== origin) return res.status(403).json({ error: "Origin not allowed" });
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    res.status(500).json({ error: "Missing ANTHROPIC_API_KEY environment variable." });
-    return;
-  }
+  const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
+  const { model, messages } = body;
+  if (!MODELS.has(model) || !Array.isArray(messages) || messages.length > 60) return res.status(400).json({ error: "Bad request" });
 
-  const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body ?? {};
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
+  const r = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({
-      model: body.model || "claude-3-5-sonnet-20241022",
-      max_tokens: body.max_tokens || 1200,
-      temperature: body.temperature ?? 0.7,
-      system: body.system,
-      messages: body.messages || [{ role: "user", content: [{ type: "text", text: body.prompt || "" }] }],
-    }),
+    headers: { "content-type": "application/json", "x-api-key": process.env.ANTHROPIC_API_KEY || "", "anthropic-version": "2023-06-01" },
+    body: JSON.stringify({ model, messages, max_tokens: Math.min(+body.max_tokens || 2000, MAX_TOKENS) }),
   });
-
-  const data = await response.json();
-  if (!response.ok) {
-    res.status(response.status).json({ error: data?.error?.message || "Claude request failed." });
-    return;
-  }
-
-  res.status(200).json(data);
+  res.status(r.status).setHeader("content-type", "application/json").send(await r.text());
 }

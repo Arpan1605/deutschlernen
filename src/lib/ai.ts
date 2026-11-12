@@ -11,6 +11,9 @@ export function errCopy(e: any) {
   if (c === "not_granted") return tx(UI.e_not_granted);
   if (c === "rate_limited" || c === "queue_overflow") return tx(UI.e_rate);
   if (c === "invalid_json") return tx(UI.e_json);
+  if (c === "bad_key") return tx(UI.e_bad_key);
+  if (c === "unavailable") return tx(window.claude ? UI.unavailable_claude : UI.unavailable);
+  if (c === "network") return tx(UI.e_network);
   return tx(UI.e_other);
 }
 

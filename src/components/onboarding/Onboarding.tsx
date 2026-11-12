@@ -8,6 +8,7 @@ import { isoDate, short } from "../../lib/dates";
 import { LangSwitch } from "../layout/Header";
 import { Segmented } from "./Segmented";
 import { Calendar } from "./Calendar";
+import { AiConnection } from "./AiConnection";
 
 const RANK: Record<string, number> = { A0: 0, A1: 1, A2: 2, B1: 3, B2: 4, C1: 5 };
 const DAY_PRESETS = [30, 60, 90, 120, 180];
@@ -142,6 +143,8 @@ export function Onboarding({ edit, onClose }: { edit: boolean; onClose: () => vo
           <Calendar value={start} onChange={setStart} labelId={ids.start} />
           {moved && <div className="note">{tx(UI.ob_start_note)}</div>}
         </div>
+
+        <AiConnection />
 
         {preview && (
           <div className="ob-sum">

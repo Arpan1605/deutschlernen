@@ -271,8 +271,31 @@ export const UI: Record<string, Bi> = {
   errors: B("Deine Fehler", "Your mistakes"),
   corrected: B("Verbesserte Version", "Improved version"),
   unavailable: B(
-    "Das Material wird von Claude geschrieben. Das klappt nur, wenn du diese Seite in claude.ai oder der Claude-App öffnest.",
-    "The material is written by Claude. That only works when you open this page in claude.ai or the Claude app.",
+    "Das Material wird von Claude geschrieben. Füge oben rechts bei deinem Namen einen Claude-API-Schlüssel hinzu, dann geht es los.",
+    "The material is written by Claude. Add a Claude API key under your name (top right) to start.",
+  ),
+  unavailable_claude: B(
+    "Das Material wird von Claude geschrieben. Melde dich bei claude.ai an, um es zu erstellen.",
+    "The material is written by Claude. Sign in to claude.ai to create it.",
+  ),
+  add_key: B("API-Schlüssel hinzufügen", "Add API key"),
+  e_bad_key: B(
+    "Der API-Schlüssel wurde abgelehnt. Prüfe ihn oben rechts bei deinem Namen.",
+    "The API key was rejected. Check it under your name (top right).",
+  ),
+  e_network: B("Keine Verbindung zu Claude. Prüfe deine Internetverbindung.", "Couldn't reach Claude. Check your internet connection."),
+  ai_h: B("Claude-Verbindung", "Claude connection"),
+  ai_lead: B(
+    "Diese Seite läuft außerhalb von Claude. Für Lektionen, Tests und Korrekturen braucht sie deinen eigenen Claude-API-Schlüssel (console.anthropic.com → API Keys). Er bleibt nur in diesem Browser und wird direkt an Anthropic geschickt. Die Kosten laufen über dein API-Konto.",
+    "This site is running outside Claude. For lessons, tests and marking it needs your own Claude API key (console.anthropic.com → API Keys). It stays in this browser only and is sent straight to Anthropic. Usage is billed to your API account.",
+  ),
+  ai_key: B("API-Schlüssel", "API key"),
+  ai_test: B("Verbindung testen", "Test connection"),
+  ai_ok: B("Verbunden ✓", "Connected ✓"),
+  ai_remove: B("Schlüssel entfernen", "Remove key"),
+  ai_proxy: B(
+    "Diese Seite ist mit Claude verbunden – du musst nichts einrichten.",
+    "This site is connected to Claude – nothing to set up.",
   ),
   e_not_granted: B(
     "Du hast den Zugriff auf Claude abgelehnt. Lade die Seite neu, um ihn zu erlauben.",
