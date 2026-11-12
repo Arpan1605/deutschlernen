@@ -35,6 +35,7 @@ export interface DownloadsNamespace {
 declare global {
   interface Window {
     claude?: { use(name: string): Promise<any> };
+    __CLAUDE_API_KEY__?: string;
   }
 }
 

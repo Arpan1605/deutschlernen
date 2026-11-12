@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { state, storage, saveState, lsSave, lsLoad, bump } from "./store";
 import { runtime, use, type DbNamespace, type UserNamespace, type SampleFn, type DownloadsNamespace } from "./runtime";
+import { configureDirectClaudeRuntime } from "./claude";
 import { applyProfile, DEFAULT_PROFILE } from "./plan";
 
 async function loadAll(db: DbNamespace, prefix: string) {
@@ -88,15 +89,20 @@ export function bootRemote() {
 }
 
 async function connect() {
+  configureDirectClaudeRuntime();
   use<SampleFn>("sample").then((s) => {
-    runtime.sample = s;
-    runtime.sampleReady = true;
-    bump();
+    if (s) {
+      runtime.sample = s;
+      runtime.sampleReady = true;
+      bump();
+    }
   });
   use<DownloadsNamespace>("downloads").then((d) => {
-    runtime.downloads = d;
-    runtime.downloadsReady = true;
-    bump();
+    if (d) {
+      runtime.downloads = d;
+      runtime.downloadsReady = true;
+      bump();
+    }
   });
   try {
     const [db, user] = await Promise.all([use<DbNamespace>("db"), use<UserNamespace>("user")]);

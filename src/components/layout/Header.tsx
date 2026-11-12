@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { tx, getLang, setLangValue, type Lang } from "../../lib/i18n";
 import { UI } from "../../data/strings";
 import { plan, phaseOf, todayIdx, weekOf, prof } from "../../lib/plan";
 import { state, bump } from "../../lib/store";
 import { ROUTES, type Route } from "../../lib/router";
 import { useApp } from "../../lib/appContext";
+import { configureDirectClaudeRuntime, getClaudeApiKey, setClaudeApiKey } from "../../lib/claude";
 
 export function LangSwitch({ className = "langsw" }: { className?: string }) {
   const set = (l: Lang) => {
@@ -33,6 +35,29 @@ function UserChip() {
       <span className="av">{p.name.trim().charAt(0).toUpperCase()}</span>
       <span>{p.name}</span>
     </button>
+  );
+}
+
+function ClaudeKeyField() {
+  const [key, setKey] = useState(getClaudeApiKey());
+  const onChange = (value: string) => {
+    setKey(value);
+    setClaudeApiKey(value);
+    configureDirectClaudeRuntime();
+    bump();
+  };
+
+  return (
+    <label className="claude-key" style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12 }}>
+      <span style={{ opacity: 0.8 }}>Claude key</span>
+      <input
+        type="password"
+        value={key}
+        placeholder="sk-ant-..."
+        onChange={(e) => onChange(e.target.value)}
+        style={{ width: 140, maxWidth: "22vw", borderRadius: 8, border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.02)", color: "#e7edf5", padding: "6px 8px" }}
+      />
+    </label>
   );
 }
 
@@ -67,6 +92,7 @@ export function Header({ route }: { route: Route }) {
           ))}
         </nav>
         <UserChip />
+        <ClaudeKeyField />
         <LangSwitch />
       </div>
     </header>
